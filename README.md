@@ -9,7 +9,13 @@ Exploring Vue 3, Naive UI, Pinia, and Tailwind CSS by building kanban task manag
 - Naive UI for Custom Component
 - Tailwind CSS for Utility Class
 - Mock API with Axios
+- Draggable Cards
 
+## Login information
+```
+email: user@example.com
+password: user
+```
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
