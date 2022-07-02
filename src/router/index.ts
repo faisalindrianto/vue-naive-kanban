@@ -3,7 +3,7 @@ import { useAuthStore } from '@/stores/auth'
 
 import Auth from '../views/Auth.vue'
 import Board from '../views/Board.vue'
-import TaskDetail from '../views/TaskDetail.vue'
+import Detail from '../views/Detail.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,10 +19,11 @@ const router = createRouter({
     {
       path: '/detail/:id',
       name: 'detail',
-      component: TaskDetail,
+      component: Detail,
       meta: {
         needAuth: true,
       },
+      props: true,
     },
     {
       path: '/login',
@@ -36,8 +37,22 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  const { isAuthenticated } = useAuthStore()
+  const { isAuthenticated, setAuthenticated } = useAuthStore()
+  const token = localStorage.getItem('token')
 
+  // jika ada token dan tidak menuju /login
+  if (token && to.path !== '/login') {
+    setAuthenticated()
+    return next()
+  }
+
+  // jika ada token dan menuju /login, maka arahkan ke dashboard
+  if (token && to.path === '/login') {
+    setAuthenticated()
+    return next('/')
+  }
+
+  // jika halaman membutuhkan autentikasi dan belum terautentikasi
   if (to.meta.needAuth && !isAuthenticated) {
     return next('/login')
   }
