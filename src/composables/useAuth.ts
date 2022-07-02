@@ -2,7 +2,7 @@ import axios from 'axios'
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
-import { useMessage } from 'naive-ui'
+import { useMessage, useDialog } from 'naive-ui'
 
 const useAuth = () => {
   const email = ref('')
@@ -14,6 +14,7 @@ const useAuth = () => {
 
   const router = useRouter()
   const message = useMessage()
+  const dialog = useDialog()
 
   const login = () => {
     authError.value = ''
@@ -23,26 +24,37 @@ const useAuth = () => {
         email: email.value,
         password: password.value
       }).then(response => {
-        console.log(response)
         loadingAuth.value = false
         localStorage.setItem('token', 'AUTH_TOKEN')
         setAuthenticated()
         message.success('Berhasil login!')
         router.push('/')
-      }).catch(err => {
-        console.log(err)
+      }).catch(() => {
         loadingAuth.value = false
         message.warning('Email atau password salah!')
         authError.value = 'Email atau password tidak valid'
       })
+    } else {
+      message.warning('Harap lengkapi data terlebih dahulu!')
     }
   }
   
   const logout = () => {
-    setUnauthenticated()
-    localStorage.removeItem('token')
-    message.success('Berhasil logout!')
-    router.push('/login')
+    dialog.info({
+      title: 'Ingin logout?',
+      content: 'Konfirmasi jika anda ingin menghapus logout',
+      positiveText: 'Yakin',
+      negativeText: 'Batal',
+      positiveButtonProps: {
+        type: 'default',
+      },
+      onPositiveClick: () => {
+        setUnauthenticated()
+        localStorage.removeItem('token')
+        message.success('Berhasil logout!')
+        router.push('/login')
+      }
+    })
   }
 
   return {

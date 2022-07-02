@@ -22,9 +22,6 @@ mock.onPost('/auth/login').reply(request => {
 
   const user = data.users.find(u => u.email === email && u.password === password)
 
-  // eslint-disable-next-line
-  setTimeout(() => {}, 3000)
-
   if (user) {
     return [200, {
       message: 'success login!',
