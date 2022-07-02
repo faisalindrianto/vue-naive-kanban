@@ -88,8 +88,60 @@ mock.onGet('/kanban/tasks').reply(() => {
   return [200, data.tasks]
 })
 
-mock.onGet('/kanban/tasks/detail').reply(request => {
-  console.log(request)
+mock.onGet(/\/kanban\/tasks\/\d+/).reply(request => {
+  const taskId = request.url.substring(request.url.lastIndexOf('/') + 1)
 
-  return [200, data.tasks]
+  const task = data.tasks.find(t => t.id === +taskId)
+  if (!task) return [404]
+
+  return [200, task]
+})
+
+mock.onPost('/kanban/create').reply(request => {
+  const { name, description, level } = JSON.parse(request.data)
+  
+  const id = data.tasks[data.tasks.length - 1].id + 1
+
+  data.tasks.push({
+    id,
+    name,
+    description,
+    status: 1,
+    level,
+  })
+
+  return [200, {
+    message: 'success',
+    data: id,
+  }]
+})
+
+mock.onDelete(/\/kanban\/delete\/\d+/).reply(request => {
+  const taskId = request.url.substring(request.url.lastIndexOf('/') + 1)
+
+  data.tasks = data.tasks.filter(task => task.id !== +taskId)
+
+  return [200]
+})
+
+mock.onPatch('/kanban/update').reply(request => {
+  const { id, name, description, level } = JSON.parse(request.data)
+
+  const index = data.tasks.findIndex(t => t.id === +id)
+
+  data.tasks[index].name = name
+  data.tasks[index].description = description
+  data.tasks[index].level = level
+
+  return [200]
+})
+
+mock.onPatch('/kanban/update-status').reply(request => {
+  const { id, status } = JSON.parse(request.data)
+
+  const index = data.tasks.findIndex(t => t.id === +id)
+
+  data.tasks[index].status = status
+
+  return [200]
 })
