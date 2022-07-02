@@ -1,6 +1,14 @@
-# kanban-task-management
+# Kanban Task Management
 
-This template should help get you started developing with Vue 3 in Vite.
+Exploring Vue 3, Naive UI, Pinia, and Tailwind CSS by building kanban task management like Trello.
+
+## Features
+- Vue 3 + Composition API
+- Vue Router
+- Pinia State Management
+- Naive UI for Custom Component
+- Tailwind CSS for Utility Class
+- Mock API with Axios
 
 ## Recommended IDE Setup
 
@@ -17,30 +25,39 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
     2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
 
-## Customize configuration
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+## Project Installation
 
 ```sh
-npm install
+yarn
+
+# or with npm
+npm run install
 ```
 
 ### Compile and Hot-Reload for Development
 
 ```sh
+yarn dev
+
+# or with npm
 npm run dev
 ```
 
 ### Type-Check, Compile and Minify for Production
 
 ```sh
+yarn build
+
+# or with npm
 npm run build
 ```
 
 ### Lint with [ESLint](https://eslint.org/)
 
 ```sh
+yarn lint
+
+# or with npm
 npm run lint
 ```
