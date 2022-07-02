@@ -10,11 +10,14 @@
     "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "axios": "^0.21.1",
+    "axios-mock-adapter": "^1.19.0",
     "naive-ui": "^2.30.8",
     "pinia": "^2.0.14",
     "vfonts": "^0.0.3",
     "vue": "^3.2.37",
-    "vue-router": "^4.0.16"
+    "vue-router": "^4.0.16",
+    "vue3-draggable": "^2.0.9"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",

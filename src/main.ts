@@ -1,3 +1,4 @@
+import '@/api/db'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import '@/assets/tailwind.css'
