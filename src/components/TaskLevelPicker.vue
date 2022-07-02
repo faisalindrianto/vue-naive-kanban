@@ -2,11 +2,20 @@
   import { onMounted, computed } from 'vue'
   import useTask from '@/composables/useTask'
 
-  const { levelList, getLevelList } = useTask()
+  const { levelList, getLevelList, resolveLevelColor } = useTask()
 
   onMounted(() => {
     getLevelList()
   })
+
+  const props = defineProps({
+    modelValue: {
+      type: Number,
+      default: null,
+    }
+  })
+
+  const emits = defineEmits(['update:modelValue'])
 
   const options = computed(() => levelList.value.map(el => ({
     label: el.name,
@@ -14,17 +23,22 @@
   })))
 
   const handleSelect = (key: number) => {
-    console.log(key)
+    emits('update:modelValue', key)
   }
+
+  const selectedOptions = computed(() => options.value.find(el => el.key === props.modelValue))
 </script>
 
 <template>
-  <small>Level Task</small>
-  <n-dropdown
-    trigger="click"
-    :options="options"
-    @select="handleSelect"
-  >
-    <n-button>Go For a Trip</n-button>
-  </n-dropdown>
+  <div class="flex flex-col">
+    <n-dropdown
+      trigger="click"
+      :options="options"
+      @select="handleSelect"
+    >
+      <n-button :type="resolveLevelColor(selectedOptions?.key)">
+        <span class="text-white">{{ selectedOptions ? selectedOptions?.label : 'Pilih Level' }}</span>
+      </n-button>
+    </n-dropdown>
+  </div>
 </template>
